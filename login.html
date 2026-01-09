@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - CampusMart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Login</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="add.html">Add Product</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <div class="center-form">
+    <form id="loginForm" class="login-box">
+      <h2>Student Login</h2>
+      <label for="studentId">Student ID:
+        <input type="text" id="studentId" required>
+      </label>
+      <label for="password">Password:
+        <input type="password" id="password" required>
+      </label>
+      <div class="checkbox">
+        <input type="checkbox" id="rememberMe">
+        <label for="rememberMe">Remember Me</label>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    const validUsers = [
+      { id: "student123", password: "pass123" },
+      { id: "saikiran", password: "1234" }
+    ];
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = document.getElementById('studentId').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const rememberMe = document.getElementById('rememberMe').checked;
+
+      const user = validUsers.find(u => u.id === id && u.password === password);
+
+      if (user) {
+        if (rememberMe) {
+          localStorage.setItem('studentId', id);
+        } else {
+          sessionStorage.setItem('studentId', id);
+        }
+        alert('Login successful!');
+        window.location.href = 'index.html';
+      } else {
+        alert('Invalid credentials.');
+      }
+    });
+  </script>
+</body>
+</html>

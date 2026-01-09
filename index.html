@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Mart - Student Marketplace</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">📚</div>
+        <h1>Student Mart</h1>
+      </div>
+    </div>
+    <nav>
+      <a href="#" onclick="showPage('home')" class="nav-link active">Home</a>
+      <a href="#" onclick="showPage('add')" class="nav-link">Add Product</a>
+      <a href="#" onclick="showPage('about')" class="nav-link">About</a>
+      <a href="#" onclick="showPage('contact')" class="nav-link">Contact</a>
+      <a href="#" onclick="showPage('login')" class="nav-link" id="login-link">Login</a>
+      <a href="#" onclick="showPage('register')" class="nav-link" id="register-link">Register</a>
+      <a href="#" onclick="logout()" class="nav-link" id="logout-link" style="display: none;">Logout</a>
+      <span id="user-greeting"></span>
+      <span class="cart-icon" onclick="showCart()">🛒 <span id="cart-count">0</span></span>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search products..." onkeyup="searchProducts()">
+        <select id="category-filter" onchange="filterProducts()">
+          <option value="">All Categories</option>
+          <option value="electronics">Electronics</option>
+          <option value="books">Books</option>
+          <option value="stationery">Stationery</option>
+          <option value="tools">Tools</option>
+        </select>
+      </div>
+      <div class="product-grid" id="product-grid">
+        <!-- Products will be dynamically loaded here -->
+      </div>
+    </div>
+
+    <!-- Add Product Page -->
+    <div id="add-page" class="page">
+      <div class="center-form">
+        <form class="login-box" id="add-product-form">
+          <h2>Add New Product</h2>
+          <label>Product Name:
+            <input type="text" id="product-name" required>
+          </label>
+          <label>Price (₹):
+            <input type="number" id="product-price" required min="1">
+          </label>
+          <label>Category:
+            <select id="product-category" required>
+              <option value="">Select Category</option>
+              <option value="electronics">Electronics</option>
+              <option value="books">Books</option>
+              <option value="stationery">Stationery</option>
+              <option value="tools">Tools</option>
+            </select>
+          </label>
+          <label>Description:
+            <textarea id="product-description" rows="3"></textarea>
+          </label>
+          <label>Image URL:
+            <input type="file" id="product-image" accept="image/*">
+            <div class="image-preview" id="image-preview"></div>
+          </label>
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about-page" class="page">
+      <div class="content">
+        <h2>Our Mission</h2>
+        <p>Student Mart is an online student marketplace built by students, for students. Our mission is to help students buy, sell, or exchange academic materials easily within their campus community.</p>
+        <h2>Why Student Mart?</h2>
+        <p>We provide a platform for affordable study items, electronics, and services. Students can earn by selling their used items and help others save money.</p>
+        <div class="stats">
+          <div class="stat-card">
+            <h3 id="total-products">0</h3>
+            <p>Products Listed</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="total-users">2</h3>
+            <p>Active Users</p>
+          </div>
+          <div class="stat-card">
+            <h3>100%</h3>
+            <p>Student Verified</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact-page" class="page">
+      <div class="center-form">
+        <form class="login-box" id="contact-form">
+          <h2>Contact Us</h2>
+          <label>Name:
+            <input type="text" id="contact-name" required>
+          </label>
+          <label>Email:
+            <input type="email" id="contact-email" required>
+          </label>
+          <label>Message:
+            <textarea id="contact-message" rows="5" required></textarea>
+          </label>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="register-page" class="page">
+      <div class="center-form">
+        <form class="login-box" id="register-form">
+          <h2>Student Registration</h2>
+          <label>Student ID:
+            <input type="text" id="register-student-id" required>
+          </label>
+          <label>Full Name:
+            <input type="text" id="register-name" required>
+          </label>
+          <label>Email:
+            <input type="email" id="register-email" required>
+          </label>
+          <label>Password:
+            <input type="password" id="register-password" required minlength="4">
+          </label>
+          <label>Confirm Password:
+            <input type="password" id="register-confirm-password" required minlength="4">
+          </label>
+          <label>Course/Department:
+            <input type="text" id="register-course" required>
+          </label>
+          <div class="checkbox-container">
+            <input type="checkbox" id="terms-agreement" required>
+            <label for="terms-agreement">I agree to the Terms and Conditions</label>
+          </div>
+          <button type="submit">Register</button>
+          <p class="switch-form">
+            Already have an account? <a href="#" onclick="showPage('login')">Login here</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page">
+      <div class="center-form">
+        <form class="login-box" id="login-form">
+          <h2>Student Login</h2>
+          <label for="student-id">Student ID:
+            <input type="text" id="student-id" required>
+          </label>
+          <label for="password">Password:
+            <input type="password" id="password" required>
+          </label>
+          <div class="checkbox-container">
+            <input type="checkbox" id="remember-me">
+            <label for="remember-me">Remember Me</label>
+          </div>
+          <button type="submit">Login</button>
+          <p class="switch-form">
+            Don't have an account? <a href="#" onclick="showPage('register')">Register here</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCart()">&times;</span>
+      <h2>Shopping Cart</h2>
+      <div id="cart-items"></div>
+      <div class="cart-total">
+        <strong>Total: ₹<span id="cart-total">0</span></strong>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="success-modal" class="modal">
+    <div class="modal-content success-modal">
+      <div class="success-icon">✅</div>
+      <h2>Order Successful!</h2>
+      <p id="success-message"></p>
+      <div class="success-details">
+        <p>Your order has been placed successfully and will be processed within 24 hours.</p>
+        <p>You will receive a confirmation email shortly.</p>
+      </div>
+      <button class="success-btn" onclick="closeSuccessModal()">Continue Shopping</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Student Mart. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png" alt="Facebook"/></a>
+      <a href="#"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram"/></a>
+      <a href="#"><img src="https://img.icons8.com/ios-filled/24/ffffff/twitter.png" alt="Twitter"/></a>
+    </div>
+  </footer>
+
+  <!-- Message Container -->
+  <div id="message-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

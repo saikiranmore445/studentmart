@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Product</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body onload="restrictPage()">
+  <header>
+    <h1>Add Product</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="add.html">Add Product</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <div class="center-form">
+    <form class="login-box">
+      <h2>Add New Product</h2>
+      <label>Product Name:
+        <input type="text" required>
+      </label>
+      <label>Price:
+        <input type="number" required>
+      </label>
+      <label>Image URL:
+        <input type="url">
+      </label>
+      <button type="submit">Add Product</button>
+    </form>
+  </div>
+</body>
+</html>
